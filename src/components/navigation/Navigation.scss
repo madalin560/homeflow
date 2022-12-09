@@ -1,0 +1,32 @@
+.navbar {
+    background-color: #2A2E43;
+    color: white;
+    min-height: 76px;
+
+    .brand-name {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+
+        span {
+            background: #2EB2C5;
+            padding: 6px;
+            border-radius: 10px;
+            margin: 10px;
+            font-size: 1.2rem;
+        }
+    }
+
+    .navbar-nav {
+        align-items: center;
+
+        .menu-item {
+            cursor: pointer;
+        }
+
+        .menu-item:not(:last-child) {
+            margin-right: 16px;
+        }
+    }
+}

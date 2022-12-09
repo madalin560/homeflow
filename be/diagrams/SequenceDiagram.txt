@@ -1,0 +1,27 @@
+sequenceDiagram
+
+    actor user
+    participant UserController
+    participant UserFacade
+    participant UserService
+    participant UserRepository
+
+    user ->> UserController: addUser
+    UserController ->> UserController: ValidateRequestBody
+    UserController ->> UserFacade: addUser
+    UserFacade ->> +UserService: addUser
+    UserService ->> +UserRepository: existsByUsername
+    UserRepository -->> -UserService: Check result for username being taken or not
+
+    break when the result is true
+        UserService -->> UserController: throwUserAlreadyExistsException
+        UserController -->> user: Show failure cause
+    end
+
+    UserService ->> +UserRepository: saveUserData
+    UserRepository -->> -UserService: Returns saved user
+    UserService -->> -UserFacade:
+    UserFacade ->> +UserService: createUserURI
+    UserService -->> -UserFacade: Returns URI of the saved user
+    UserFacade -->> UserController:
+    UserController -->> user: Show success message

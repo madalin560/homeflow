@@ -1,0 +1,17 @@
+@import 'src/scss/variables';
+
+.clickable {
+    cursor: pointer;
+}
+
+.user-score {
+    padding: $base-padding $medium-padding;
+    background: $main-color;
+    margin-bottom: $large-margin;
+    border-radius: 8px;
+    color: $white;
+
+    .score {
+        font-size: 30px;
+    }
+}

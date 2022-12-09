@@ -1,0 +1,21 @@
+# For all available properties see:
+# https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+root = true
+
+[*]
+
+# Spacing
+
+indent_style = space
+indent_size = 4
+charset = utf-8
+
+# Code structure
+
+trim_trailing_whitespace = true
+max_line_length = 250
+insert_final_newline = true
+quote_type = single
+spaces_around_operators = true
+curly_bracket_next_line = false
+indent_brace_style = K&R

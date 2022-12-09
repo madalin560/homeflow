@@ -1,0 +1,93 @@
+@import "~bootstrap/scss/bootstrap";
+@import "scss/components";
+
+body {
+    background: #D1D7E2;
+    margin-bottom: 40px;
+}
+
+.App {
+    text-align: center;
+}
+
+.slope-marker {
+    background: #2EB2C5;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 85px;
+    cursor: pointer;
+    position: relative;
+
+    .indicator {
+        right: -15px;
+        top: -15px;
+        background: darkred;
+        color: white;
+        position: absolute;
+        padding: 5px 10px;
+        border-radius: 40px;
+    }
+}
+
+.toasts-wrapper {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 2000;
+
+    .toast {
+        &.toast-error {
+            background: #f8d7da !important;
+        }
+
+        &.toast-success {
+            background: #d4edda !important;
+        }
+    }
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.badge {
+    margin-right: 10px;
+}
+
+.outlined {
+    border: 1px solid white;
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.panel-top-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+// Global Bootstrap overrides
+.btn-primary {
+    background: #2EB2C5;
+}
+
+button {
+    box-shadow: none !important;
+}
+
+.btn-primary:hover {
+    background-color: #007bff !important;
+}
+
+body {
+    margin: 0 !important;
+}
