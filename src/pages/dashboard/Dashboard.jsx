@@ -1,10 +1,12 @@
 import React, {useState, useEffect, useCallback} from 'react';
+import {Button} from 'react-bootstrap';
 import _ from 'lodash';
 
 import {Table} from 'components/table/Table';
 import {Panel} from 'components/layout/Panel';
 
 import './Dashboard.scss';
+import { NoData } from 'components/no-data/NoData';
 
 const COLUMNS = [
     {
@@ -46,13 +48,25 @@ const MOCK_DATA = [
     }
 ];
 
+const AddTaskButton = (
+    <Button size="lg" onClick={() => {}}>
+        Add new task
+    </Button>
+);
+
+const CreateFamilyButton = (
+    <Button size="lg" onClick={() => {}}>
+        Create a family
+    </Button>
+);
+
 function Dashboard(props) {
     return (
         <React.Fragment>
             <Panel title={'My family'}>
-                
+                <NoData action={CreateFamilyButton} />
             </Panel>
-            <Panel title={'My Tasks'}>
+            <Panel title={'Tasks in my family'} actionButtons={AddTaskButton}>
                 <Table columns={COLUMNS} data={MOCK_DATA} />
             </Panel>
         </React.Fragment>

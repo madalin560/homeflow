@@ -1,0 +1,39 @@
+@import "src/scss/variables";
+
+.screen {
+  z-index: 10000;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #ffffff;
+  box-shadow: $raised-box-shadow;
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  height: 95%;
+
+  .screen-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: $main-color;
+    color: white;
+    padding: $padding-medium;
+
+    svg {
+      cursor: pointer;
+    }
+  }
+
+  .screen-content {
+    overflow: auto;
+    background: $blue-gray;
+    padding: $padding-medium;
+    flex-grow: 1;
+    // Bootstrap override
+    border-radius: 0 !important;
+  }
+}

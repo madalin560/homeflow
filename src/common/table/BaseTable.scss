@@ -1,0 +1,80 @@
+@import "src/scss/variables";
+
+$cell-height: 49px;
+$odd-rows-color: rgba(0, 0, 0, 0.05);
+
+.table {
+  tbody {
+    .column-header {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    tr:nth-child(odd) {
+      background-color: $odd-rows-color;
+    }
+
+    tr:last-of-type {
+      border-bottom: 2px solid $light-gray;
+    }
+
+    td {
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .empty-row {
+      td {
+        height: $cell-height;
+      }
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+
+      svg {
+        cursor: pointer;
+      }
+
+      .action-button {
+        border-radius: $base-border-radius;
+        border: 1px solid $light-gray;
+        padding: $padding-xsmall;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}
+
+.pagination {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  .page-controls {
+    display: flex;
+    align-items: center;
+
+    .displayed-page {
+      margin: 0 $margin-medium;
+    }
+
+    svg {
+      cursor: pointer;
+
+      &[disabled] {
+        color: gray;
+        cursor: default;
+      }
+    }
+  }
+}

@@ -16,28 +16,8 @@ import {ResponsiveLayout} from 'components/responsive-layout/ResponsiveLayout';
 import {ResetPasswordModal} from './page-components/ResetPasswordModal';
 
 import {useToggle} from 'utils/hook-utils';
-import {CODE_REPORTS_MAP, REPORT_TYPE_LABELS} from 'configs/reports-config';
 
 import 'FormFields.scss';
-
-const formatPieChartData = (data) => {
-    const reportsMap = {};
-
-    data.forEach(report => {
-        const reportType = CODE_REPORTS_MAP[report.type];
-
-        if (reportsMap[reportType]) {
-            reportsMap[reportType] += 1;
-        } else {
-            reportsMap[reportType] = 1;
-        }
-    });
-
-    return Object.keys(reportsMap).map(key => ({
-        name: REPORT_TYPE_LABELS[key],
-        value: reportsMap[key]
-    }));
-};
 
 const formatHistoricalData = (data) => {
     const reportsMap = {};
@@ -118,23 +98,6 @@ function User(props) {
                 </div>
                 <h6>Reports opened by type</h6>
                 <br />
-                <ResponsiveContainer width="100%" height={300} minWidth={minWidth}>
-                    <PieChart>
-                        <Pie
-                            data={formatPieChartData(reportsData)}
-                            innerRadius={60}
-                            outerRadius={80}
-                            fill="#8884d8"
-                            paddingAngle={5}
-                            dataKey="value"
-                        >
-                            {
-                                formatPieChartData(reportsData).map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
-                            }
-                        </Pie>
-                        <Tooltip />
-                    </PieChart>
-                </ResponsiveContainer>
 
                 <h6>Reports opened in time</h6>
                 <br />

@@ -1,14 +1,12 @@
 {
-  "name": "snowhub",
+  "name": "homeflow",
   "version": "1.0.0",
   "private": true,
   "contributors": [
-    "Alexandru Madalin",
-    "Alexandru Lungu",
-    "Dan Brezeanu",
-    "Tudor Daniela"
+    "Alexandru Madalin"
   ],
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.5.0",
@@ -20,9 +18,11 @@
     "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "query-string": "^6.13.7",
+    "rc-field-form": "^1.27.3",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-bootstrap-icons": "^1.2.2",
+    "react-datetime": "^3.2.0",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
     "react-router-dom": "^5.2.0",

@@ -9,10 +9,11 @@ import _ from 'lodash';
 
 import Cookie from './services/cookies/Cookie';
 import Endpoint from './services/api/endpoint';
-import {ToastFactory} from './services/errors/ToastFactory';
 import {Home} from './pages/home/Home';
 import {Navigation} from './components/navigation/Navigation';
 import {GuardedRoute} from './components/guarded-route/GuardedRoute';
+import { ModalFactory } from "./common/factories/modal-factory/ModalFactory";
+import { ToastFactory } from "./common/factories/toast-factory/ToastFactory";
 
 import {ACTION_TYPES} from './state/actions';
 import {ROUTES_CONFIG} from './configs/routes';
@@ -55,6 +56,7 @@ function AppContentWrapper(props) {
     return (
         <Router>
             <Navigation />
+            <ModalFactory modalStack={props.modals} />
             <ToastFactory toasts={props.toasts} />
             <div className="content-wrapper">
                 <Switch>
@@ -68,7 +70,9 @@ function AppContentWrapper(props) {
 
 const mapStateToProps = (state) => ({
     userData: state.appState.userData,
-    toasts: state.appState.toasts
+    toasts: state.appState.toasts,
+    modals: state.modals.modalStack,
+    toasts: state.toasts.toasts,
 });
 
 // eslint-disable-next-line

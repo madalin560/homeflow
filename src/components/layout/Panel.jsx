@@ -3,13 +3,18 @@ import PropTypes from 'prop-types';
 
 import './Panel.scss';
 
-function Panel({title, subtitle, children, className, size}) {
+function Panel({title, subtitle, children, className, size, actionButtons}) {
     const classNames = ['main-panel', size, className];
 
     return (
         <div className={classNames.join(' ')}>
-            {title && <h3 className="title">{title}</h3>}
-            {subtitle && <div className="subtitle">{subtitle}</div>}
+            <div className="panel-header">
+                <div>
+                    {title && <h3 className="title">{title}</h3>}
+                    {subtitle && <div className="subtitle">{subtitle}</div>}
+                </div>
+                {actionButtons}
+            </div>
             {children}
         </div>
     );

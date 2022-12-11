@@ -1,0 +1,62 @@
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+
+  .table-input {
+    .add-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .vertical-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+
+    .form-field {
+      flex-shrink: 1;
+      min-width: 1px;
+    }
+  }
+
+  .checkox-input {
+    display: flex;
+    align-items: center;
+
+    input {
+      margin-right: 10px;
+    }
+  }
+
+  .text-input-field {
+    height: 40px;
+    font-size: 16px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #d1d3d4;
+    padding: 20px;
+    border-radius: 6px;
+    color: #111;
+    background: #fff;
+    transition: 0.2s all;
+
+    &:focus,
+    &.active {
+      outline: none;
+      border-color: #03a9f4;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .select-field {
+    min-width: 200px;
+  }
+
+  .mandatory {
+    color: red;
+  }
+}

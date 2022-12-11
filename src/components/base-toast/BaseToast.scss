@@ -1,0 +1,9 @@
+.toast {
+  &.toast-error {
+    background: #f8d7da !important;
+  }
+
+  &.toast-success {
+    background: #d4edda !important;
+  }
+}
