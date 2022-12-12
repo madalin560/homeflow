@@ -1,5 +1,5 @@
 import store from "store";
-import { screenActions } from "store/actions/screens";
+import { screenActions } from "state/actions/screens";
 
 class ScreenService {
   static openScreen(payload) {

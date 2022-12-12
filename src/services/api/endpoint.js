@@ -3,12 +3,12 @@ import _ from 'lodash';
 
 import api from './api';
 import {Interface, AbstractClass} from './implementations';
-import {ENDPOINT_PATHS, METHOD_NAMES} from './endpoint-constants';
+import {ENDPOINT_PATHS} from './endpoint-constants';
 
 // Interface for implementing APIs
 // Attach to interface all methods defined in endpoint-constants.js
 const ApiInterface = Interface(
-    METHOD_NAMES
+    []
 );
 
 // Abstract API class. Abstract methods are 'get', 'post'
@@ -30,65 +30,8 @@ class Implementation extends AbstractClass(AbstractAPI, []) {
      *  };
      * @param payload
      **/
-
-    changePassword = (payload = {}) => {
-        return this.post(ENDPOINT_PATHS.CHANGE_PASSWORD, payload);
-    };
-
-    login = (payload = {}) => {
-        return this.post(ENDPOINT_PATHS.LOGIN, payload);
-    };
-
-    register = (payload = {}) => {
-        return this.post(ENDPOINT_PATHS.USERS, payload);
-    };
-
-    getUsers = () => {
-        return this.get(ENDPOINT_PATHS.USERS);
-    };
-
-    getUserHistory = () => {
-        return this.get(ENDPOINT_PATHS.HISTORY);
-    };
-
-    getSlopes = (params = {}) => {
-        return this.get(ENDPOINT_PATHS.SLOPES, params);
-    };
-
-    getSlopesByCoords = (pathVariables = []) => {
-        return this.get(ENDPOINT_PATHS.SLOPES_BY_COORDS, {}, pathVariables);
-    };
-
-    addReport = (payload = {}) => {
-        return this.post(ENDPOINT_PATHS.REPORTS, payload);
-    };
-
-    getReports = (pathParams = [], params = {}) => {
-        return this.get(ENDPOINT_PATHS.REPORTS, params, pathParams);
-    };
-
-    getScores = () => {
-        return this.get(ENDPOINT_PATHS.SCORES);
-    };
-
-    getUserData = () => {
-        return this.get(ENDPOINT_PATHS.USER_DATA);
-    };
-
-    getUserReports = () => {
-        return this.get(ENDPOINT_PATHS.USER_REPORTS);
-    };
-
-    getUserScore = () => {
-        return this.get(ENDPOINT_PATHS.USER_SCORE);
-    };
-
-    resetPassword = (payload = {}) => {
-        return this.post(ENDPOINT_PATHS.RESET_PASSWORD, payload);
-    };
-
-    voteReport = (payload = {}) => {
-        return this.post(ENDPOINT_PATHS.VOTE_REPORT, payload);
+    addUser = (payload = {}) => {
+        this.post(ENDPOINT_PATHS.USER, payload);
     };
 }
 

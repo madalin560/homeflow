@@ -1,34 +1,20 @@
-const METHOD_NAMES = [
-    'changePassword',
-    'login',
-    'register',
-    'getSlopes',
-    'getReports',
-    'addReport',
-    'resetPassword',
-    'getUserData',
-    'getUserReports',
-    'getUserScore',
-    'getScores'
-];
-
 const ENDPOINT_PATHS = {
-    CHANGE_PASSWORD: 'users/changepass',
-    USER_DATA: 'users/currentUser',
-    USER_REPORTS: 'reports/byUser',
-    USER_SCORE: 'scores/byUser',
-    USERS: 'users',
-    LOGIN: 'users/login',
-    HISTORY: 'history',
-    SLOPES: 'slopes',
-    SLOPES_BY_COORDS: 'slopes/{0}/{1}',
-    REPORTS: 'reports',
-    RESET_PASSWORD: 'users/forgotpass',
-    SCORES: 'scores',
-    VOTE_REPORT: 'interactions'
+    // Users Crud
+    USER_DATA: 'user/{0}',
+    USER: 'user',
+    DELETE_USER: 'user/delete/{0}',
+
+    // Family Crud
+    FAMILY_DATA: 'family/{0}',
+    FAMILY: 'family',
+    ADD_USER_TO_FAMILY: 'family/add/{0}/{1}',
+    DELETE_USER_FROM_FAMILYU: 'family/delete/{0}/{1}',
+
+    // Task Crud
+    TASK_DATA: 'task/{0}',
+    TASK: 'task'
 };
 
 export {
-    ENDPOINT_PATHS,
-    METHOD_NAMES
+    ENDPOINT_PATHS
 };
