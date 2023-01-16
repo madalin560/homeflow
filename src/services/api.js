@@ -1,9 +1,9 @@
 import Cookie from 'services/cookies/Cookie';
 
 const BASE_URL = 'http://localhost:8080/api';
-const USER = 'user';
-const FAMILY = 'family';
-const TASK = 'task';
+const USER = 'users';
+const FAMILY = 'families';
+const TASK = 'tasks';
 
 const getCredentials = () => {
     return Cookie.getCookieByName('AUTH');
@@ -45,7 +45,7 @@ const api = {
     },
     task: {
         getTasksInFamily: (familyId) => {
-            return fetch(BASE_URL + '/' + TASK + '/' + FAMILY + '/' + familyId, {
+            return fetch(BASE_URL + '/' + TASK + '/' + "family" + '/' + familyId, {
                 method: 'GET',
                 headers: {
                     Authorization: 'Basic ' + getCredentials()
