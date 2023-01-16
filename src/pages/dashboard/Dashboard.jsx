@@ -1,12 +1,14 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {Button} from 'react-bootstrap';
-import _ from 'lodash';
+import _, { result } from 'lodash';
 
 import {Table} from 'components/table/Table';
 import {Panel} from 'components/layout/Panel';
 
 import './Dashboard.scss';
 import { NoData } from 'components/no-data/NoData';
+import api from 'services/api';
+import Cookie from 'services/cookies/Cookie';
 
 const COLUMNS = [
     {
@@ -15,36 +17,11 @@ const COLUMNS = [
     },
     {
         header: 'Status',
-        accessor: 'status'
-    },
-    {
-        header: 'Creation time',
-        accessor: 'creationTime'
+        accessor: 'state'
     },
     {
         header: 'Assigned To',
-        accessor: 'assignedTo'
-    }
-];
-
-const MOCK_DATA = [
-    {
-        name: 'Task 1',
-        status: 'New',
-        creationTime: '1 Dec 2022',
-        assignedTo: 'Madalin'
-    },
-    {
-        name: 'Task 1',
-        status: 'New',
-        creationTime: '1 Dec 2022',
-        assignedTo: 'Madalin'
-    },
-    {
-        name: 'Task 1',
-        status: 'New',
-        creationTime: '1 Dec 2022',
-        assignedTo: 'Madalin'
+        accessor: 'assigneeName'
     }
 ];
 
@@ -61,14 +38,32 @@ const CreateFamilyButton = (
 );
 
 function Dashboard(props) {
+
+    const [familyId, setFamilyId] = useState('');
+
+    useEffect(async () => {
+        await api.user.getUser(Cookie.getCookieByName('NAME')).then(async result => {
+            if (result.ok) {
+                const user = await result.json();
+                setFamilyId(user.familyId)
+            }
+        }).catch(err => {
+            console.error(err);
+        }); 
+    }, []);
+
     return (
         <React.Fragment>
+            {
+            !familyId?
             <Panel title={'My family'}>
                 <NoData action={CreateFamilyButton} />
             </Panel>
+            :
             <Panel title={'Tasks in my family'} actionButtons={AddTaskButton}>
-                <Table columns={COLUMNS} data={MOCK_DATA} />
+                <Table columns={COLUMNS} familyId={familyId}/>
             </Panel>
+            }
         </React.Fragment>
     );
 }

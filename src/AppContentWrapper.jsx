@@ -34,9 +34,9 @@ function AppContentWrapper(props) {
     useEffect(
         () => {
             if (Cookie.getCookieByName('AUTH')) {
-                Endpoint.api.getUserData().then(response => {
+                /*Endpoint.api.getUserData().then(response => {
                     dispatch({type: ACTION_TYPES.SET_USER, payload: response})
-                });
+                });*/
             }
         },
         [dispatch]

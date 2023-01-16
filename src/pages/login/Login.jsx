@@ -7,10 +7,9 @@ import _ from 'lodash';
 
 import {Link} from 'components/link/Link';
 import {Panel} from 'components/layout/Panel';
-import Endpoint from 'services/api/endpoint';
 import Cookie from 'services/cookies/Cookie';
+import api from '../../services/api';
 
-import {ACTION_TYPES} from 'state/actions';
 import {PAGES} from 'configs/routes';
 
 import 'FormFields.scss';
@@ -21,20 +20,21 @@ function Login(props) {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const handleFormSubmit = (values, {setSubmitting}) => {
-        Endpoint.api.login({...values})
-            .then(response => {
-                setSubmitting(false);
-
-                Cookie.setCookie('AUTH', `Bearer ${response.token}`)
-                dispatch({type: ACTION_TYPES.SET_USER, payload: response})
-
+    const handleFormSubmit = async (values, {setSubmitting}) => {
+        //const user = await api.user.getUser('gigel').then((response) => response.json()).then((json) => {return json;})
+        await api.user.login(values.name, values.password).then((response) => {
+            setSubmitting(false);
+            console.log(response)
+            if (response.ok) {
+                localStorage.setItem('creds', Buffer.from(values.name + ":" + values.password).toString('base64'));
+                Cookie.setCookie('AUTH', Buffer.from(values.name + ":" + values.password).toString('base64'));
+                Cookie.setCookie('NAME', values.name)
+                //dispatch({type: ACTION_TYPES_SET_USER, payload: response})
                 history.push(PAGES.dashboard);
-            })
-            .catch(errResponse => {
-                setSubmitting(false);
-                setErrorMessage(_.get(errResponse, 'message', 'Unknown Error'));
-            });
+            } else {
+                setErrorMessage('Wrong credentials')
+            }
+        });
     }
 
     return (
@@ -42,15 +42,14 @@ function Login(props) {
             <img className="panel-top-image" src={loginIll} alt='login' />
             {errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
             <Formik
-                initialValues={{ email: '', password: '' }}
+                initialValues={{ name: '', password: '' }}
                 validate={values => {
                     const errors = {};
-                    if (!values.email) {
-                        errors.email = 'Required';
-                    } else if (
-                        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                    ) {
-                        errors.email = 'Invalid email address';
+                    if (!values.name) {
+                        errors.name = 'Name is required';
+                    }
+                    if (!values.password) {
+                        errors.name = 'Password is required';
                     }
                     return errors;
                 }}
@@ -60,8 +59,8 @@ function Login(props) {
                     <Form>
                         <div className="form-field">
                             <label>Email</label>
-                            <Field type="email" name="email" />
-                            <ErrorMessage name="email" component="div" />
+                            <Field name="name" />
+                            <ErrorMessage name="name" component="div" />
                         </div>
                         <div className="form-field">
                             <label>Password</label>

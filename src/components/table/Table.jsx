@@ -1,8 +1,23 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
+import { useEffect } from 'react';
+import api from 'services/api';
 
 import './Table.scss';
 
 function Table(props) {
+
+    const [tasks, setTasks] = useState([]);
+
+    useEffect(async () => {
+        await api.task.getTasksInFamily(props.familyId).then(async (response) => {
+            if (response.ok) {
+                const list = await response.json();
+                console.log(list)
+                setTasks(list);
+            }
+        })
+    }, [])
+
     const headers = useMemo(
         () => (
             props.columns.map(column => (
@@ -14,7 +29,7 @@ function Table(props) {
 
     const rows = useMemo(
         () => (
-            props.data.map((row, index) => (
+            tasks.map((row, index) => (
                 <tr>
                     {
                         props.columns.map(column => column.accessor !== 'index' ?
@@ -29,7 +44,7 @@ function Table(props) {
                 </tr>
             ))
         ),
-        [props.data, props.columns]
+        [tasks, props.columns]
     );
 
     return (
