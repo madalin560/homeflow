@@ -8,6 +8,7 @@ import { FormField } from "common/form/FormField";
 import {
   TextInput,
   SubmitButton,
+  SelectInput,
 } from "common/form/field-types";
 import { ModalService } from "common/services/modal-service/ModalService";
 import { ToastService } from "common/services/toast-service/ToastService";
@@ -17,13 +18,13 @@ import { RULES } from "common/form/validations/common-validations";
 function TaskModal(props) {
   const isEditMode = !_.isEmpty(props.data.initialData);
 
-  const handleCollegeCreation = () => {
+  const handleTaskCreation = () => {
     ModalService.closeModal(props.data.id);
     ToastService.showSuccessToast();
   };
 
   const handleSubmit = (values) => {
-    const payload = {
+    /*const payload = {
       ...values,
       collegeId: props.data.initialData.collegeId,
     };
@@ -34,7 +35,7 @@ function TaskModal(props) {
 
     Endpoint(payload)
       .then(handleCollegeCreation)
-      .catch((reason) => ToastService.showErrorToast(reason));
+      .catch((reason) => ToastService.showErrorToast(reason));*/
   };
 
   return (
@@ -42,7 +43,7 @@ function TaskModal(props) {
       <BaseModal
         id={props.data.id}
         width={50}
-        height={90}
+        height={70}
         title={"Task"}
         footer={
           <SubmitButton>{"Save"}</SubmitButton>
@@ -50,17 +51,27 @@ function TaskModal(props) {
       >
         <FormField
           label={"Name"}
-          name="collegeName"
+          name="name"
           rules={[RULES.required]}
           required
         >
           <TextInput />
         </FormField>
         <FormField
-          label={"Slug"}
-          name="slug"
+          label={"State"}
+          name="state"
           rules={[RULES.required]}
           required
+        >
+          <SelectInput options={[
+            {value: 'PENDING', label: 'PENDING'},
+            {value: 'IN_PROGRESS', label: 'IN PROGRESS'},
+            {value: 'DONE', label: 'DONE'}
+            ]} isMulti={false} />
+        </FormField>
+        <FormField
+          label={"Assignee"}
+          name="assigneeName"
         >
           <TextInput />
         </FormField>

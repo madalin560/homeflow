@@ -51,6 +51,16 @@ const api = {
                     Authorization: 'Basic ' + getCredentials()
                 }
             });
+        },
+        addTask: (name, state, familyId, assigneeName) => {
+            return fetch(BASE_URL + '/' + TASK, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Basic ' + getCredentials()
+                },
+                body: JSON.stringify({name: name, state: state, familyId: familyId, assigneeName: assigneeName})
+            });
         }
     },
     family: {
