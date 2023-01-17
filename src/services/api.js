@@ -52,6 +52,18 @@ const api = {
                 }
             });
         }
+    },
+    family: {
+        createFamily: (familyName, userName) => {
+            return fetch(BASE_URL + '/' + FAMILY, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Basic ' + getCredentials()
+                },
+                body: JSON.stringify({name: familyName, membersList: [userName]})
+            });
+        }
     }
 }
 

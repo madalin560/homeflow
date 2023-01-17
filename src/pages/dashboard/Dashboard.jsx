@@ -9,6 +9,8 @@ import './Dashboard.scss';
 import { NoData } from 'components/no-data/NoData';
 import api from 'services/api';
 import Cookie from 'services/cookies/Cookie';
+import { ModalService } from "common/services/modal-service/ModalService";
+import { MODAL_TYPES } from "../../configs/modal-config"
 
 const COLUMNS = [
     {
@@ -32,7 +34,11 @@ const AddTaskButton = (
 );
 
 const CreateFamilyButton = (
-    <Button size="lg" onClick={() => {}}>
+    <Button size="lg" onClick={() => {
+        ModalService.openModal({
+            type: MODAL_TYPES.FAMILY_MODAL,
+          });
+    }}>
         Create a family
     </Button>
 );
