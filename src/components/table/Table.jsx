@@ -1,5 +1,8 @@
 import React, {useMemo, useState} from 'react';
 import { useEffect } from 'react';
+import {Button} from 'react-bootstrap';
+import { ModalService } from "common/services/modal-service/ModalService";
+import { MODAL_TYPES } from "../../configs/modal-config"
 import api from 'services/api';
 
 import './Table.scss';
@@ -18,6 +21,21 @@ function Table(props) {
         })
     }, [])
 
+    const editTask = (row) => {
+        ModalService.openModal({
+            type: MODAL_TYPES.TASK_MODAL,
+            data: {
+                familyId: props.familyId,
+                taskId: row.id,
+                initialData: {
+                    name: row.name,
+                    state: row.state,
+                    assigneeName: row.assigneeName
+                }
+            }
+        });
+    }
+
     const headers = useMemo(
         () => (
             props.columns.map(column => (
@@ -34,7 +52,10 @@ function Table(props) {
                     {
                         props.columns.map(column => column.accessor !== 'index' ?
                             (
+                                column.accessor !== 'edit' ?
                                 <td data-column={`${column.header}`}>{row[column.accessor]}</td>
+                                :
+                                <td><Button onClick={() => {editTask(row)}}>{column.header}</Button></td>
                             ) :
                             (
                                 <td data-column={`${column.header}`}>{index + 1}</td>

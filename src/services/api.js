@@ -61,6 +61,16 @@ const api = {
                 },
                 body: JSON.stringify({name: name, state: state, familyId: familyId, assigneeName: assigneeName})
             });
+        },
+        updateTask: (id, name, state, familyId, assigneeName) => {
+            return fetch(BASE_URL + '/' + TASK + '/' + id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Basic ' + getCredentials()
+                },
+                body: JSON.stringify({name: name, state: state, familyId: familyId, assigneeName: assigneeName})
+            });
         }
     },
     family: {

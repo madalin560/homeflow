@@ -24,6 +24,10 @@ const COLUMNS = [
     {
         header: 'Assigned To',
         accessor: 'assigneeName'
+    },
+    {
+        header: 'Edit',
+        accessor: 'edit'
     }
 ];
 

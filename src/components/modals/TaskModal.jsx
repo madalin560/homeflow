@@ -25,11 +25,19 @@ function TaskModal(props) {
   };
 
   const handleSubmit = async (values) => {
-    await api.task.addTask(values.name, values.state, props.data.familyId, values.assigneeName).then(response => {
-      if (response.ok) {
-        handleTaskCreation();
-      }
-    });
+    if (isEditMode) {
+      await api.task.updateTask(props.data.taskId, values.name, values.state, props.data.familyId, values.assigneeName).then(response => {
+        if (response.ok) {
+          handleTaskCreation();
+        }
+      })
+    } else {
+      await api.task.addTask(values.name, values.state, props.data.familyId, values.assigneeName).then(response => {
+        if (response.ok) {
+          handleTaskCreation();
+        }
+      });
+    }
   };
 
   return (
