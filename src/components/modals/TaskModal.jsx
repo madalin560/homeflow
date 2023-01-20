@@ -14,6 +14,7 @@ import { ModalService } from "common/services/modal-service/ModalService";
 import { ToastService } from "common/services/toast-service/ToastService";
 
 import { RULES } from "common/form/validations/common-validations";
+import api from "services/api";
 
 function TaskModal(props) {
   const isEditMode = !_.isEmpty(props.data.initialData);
@@ -23,19 +24,12 @@ function TaskModal(props) {
     ToastService.showSuccessToast();
   };
 
-  const handleSubmit = (values) => {
-    /*const payload = {
-      ...values,
-      collegeId: props.data.initialData.collegeId,
-    };
-
-    const Endpoint = isEditMode
-      ? Request.apiHandler.editCollege
-      : Request.apiHandler.addCollege;
-
-    Endpoint(payload)
-      .then(handleCollegeCreation)
-      .catch((reason) => ToastService.showErrorToast(reason));*/
+  const handleSubmit = async (values) => {
+    await api.task.addTask(values.name, values.state, props.data.familyId, values.assigneeName).then(response => {
+      if (response.ok) {
+        handleTaskCreation();
+      }
+    });
   };
 
   return (
@@ -67,7 +61,7 @@ function TaskModal(props) {
             {value: 'PENDING', label: 'PENDING'},
             {value: 'IN_PROGRESS', label: 'IN PROGRESS'},
             {value: 'DONE', label: 'DONE'}
-            ]} isMulti={false} />
+            ]} isMulti={false} isClearable={false}/>
         </FormField>
         <FormField
           label={"Assignee"}

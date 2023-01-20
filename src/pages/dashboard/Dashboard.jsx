@@ -27,26 +27,6 @@ const COLUMNS = [
     }
 ];
 
-const AddTaskButton = (
-    <Button size="lg" onClick={() => {
-        ModalService.openModal({
-            type: MODAL_TYPES.TASK_MODAL,
-        });
-    }}>
-        Add new task
-    </Button>
-);
-
-const CreateFamilyButton = (
-    <Button size="lg" onClick={() => {
-        ModalService.openModal({
-            type: MODAL_TYPES.FAMILY_MODAL,
-        });
-    }}>
-        Create a family
-    </Button>
-);
-
 function Dashboard(props) {
 
     const [familyId, setFamilyId] = useState('');
@@ -61,6 +41,29 @@ function Dashboard(props) {
             console.error(err);
         }); 
     }, []);
+
+    const AddTaskButton = (
+        <Button size="lg" onClick={() => {
+            ModalService.openModal({
+                type: MODAL_TYPES.TASK_MODAL,
+                data: {
+                    familyId: familyId
+                }
+            });
+        }}>
+            Add new task
+        </Button>
+    );
+    
+    const CreateFamilyButton = (
+        <Button size="lg" onClick={() => {
+            ModalService.openModal({
+                type: MODAL_TYPES.FAMILY_MODAL,
+            });
+        }}>
+            Create a family
+        </Button>
+    );
 
     return (
         <React.Fragment>
