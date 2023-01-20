@@ -34,12 +34,14 @@ const COLUMNS = [
 function Dashboard(props) {
 
     const [familyId, setFamilyId] = useState('');
+    const [user, setUser] = useState({});
 
     useEffect(async () => {
         await api.user.getUser(Cookie.getCookieByName('NAME')).then(async result => {
             if (result.ok) {
                 const user = await result.json();
-                setFamilyId(user.familyId)
+                setFamilyId(user.familyId);
+                setUser(user);
             }
         }).catch(err => {
             console.error(err);
@@ -69,6 +71,19 @@ function Dashboard(props) {
         </Button>
     );
 
+    const EditProfileButton = (
+        <Button size="lg" onClick={() => {
+            ModalService.openModal({
+                type: MODAL_TYPES.PROFILE_MODAL,
+                data: {
+                    initialData: user
+                }
+            });
+        }}>
+            Edit profile
+        </Button>
+    );
+
     return (
         <React.Fragment>
             {
@@ -77,7 +92,7 @@ function Dashboard(props) {
                 <NoData action={CreateFamilyButton} />
             </Panel>
             :
-            <Panel title={'Tasks in my family'} actionButtons={AddTaskButton}>
+            <Panel title={'Tasks in my family'} actionButtons={[AddTaskButton, EditProfileButton]}>
                 <Table columns={COLUMNS} familyId={familyId}/>
             </Panel>
             }

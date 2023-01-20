@@ -41,6 +41,16 @@ const api = {
                 },
                 body: JSON.stringify({name: username, password: password})
             });
+        },
+        updateUser: (username, firstName, lastName, email, phone, familyId) => {
+            return fetch(BASE_URL + '/' + USER + '/' + username, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Basic ' + getCredentials()
+                },
+                body: JSON.stringify({firstName: firstName, lastName: lastName, email: email, phone: phone, familyId: familyId})
+            });
         }
     },
     task: {
