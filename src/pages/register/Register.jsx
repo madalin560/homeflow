@@ -5,7 +5,6 @@ import {useHistory} from 'react-router-dom';
 import _ from 'lodash';
 
 import {Panel} from 'components/layout/Panel';
-import Endpoint from 'services/api/endpoint';
 import { FormField } from 'common/form/FormField';
 import {SubmitButton, TextInput} from 'common/form/field-types';
 import {Link} from 'components/link/Link';
@@ -15,18 +14,19 @@ import {PAGES} from 'configs/routes';
 
 import 'FormFields.scss';
 import registerIll from 'static/ill_form.jpg';
+import api from 'services/api';
 
 function Register() {
     const [alertPayload, setAlertPayload] = useState('');
     const [showAlert, setShowAlert] = useState(false);
     const history = useHistory();
 
-    const handleFormSubmit = (values) => {
-        Endpoint.api.addUser({...values})
-            .then(response => {
+    const handleFormSubmit = async (values) => {
+       await api.user.addUser(values.name, values.password).then((response => {
+            if (response.ok) {
                 history.push(PAGES.login);
-            })
-            .catch(errResponse => {
+            }
+       })).catch(errResponse => {
                 setAlertPayload(_.get(errResponse, 'message', 'Unknown Error'));
                 setShowAlert(true);
             });
