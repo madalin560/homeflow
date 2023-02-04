@@ -83,7 +83,7 @@ function ProfileModal(props) {
         >
           <TextInput />
         </FormField>
-
+        <p>You will automaticaly receive notification at the provided email or phone</p>
       </BaseModal>
     </Form>
   );

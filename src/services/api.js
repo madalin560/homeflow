@@ -81,6 +81,15 @@ const api = {
                 },
                 body: JSON.stringify({name: name, state: state, familyId: familyId, assigneeName: assigneeName})
             });
+        },
+        deleteTask: (id) => {
+            return fetch(BASE_URL + '/' + TASK + '/' + id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Basic ' + getCredentials()
+                },
+            });
         }
     },
     family: {

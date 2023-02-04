@@ -2,7 +2,7 @@ import React from "react";
 import Form from "rc-field-form";
 import _ from "lodash";
 
-import Request from "common/endpoint/fetch-service";
+import {Button} from 'react-bootstrap';
 import { BaseModal } from "components/base-modal/BaseModal";
 import { FormField } from "common/form/FormField";
 import {
@@ -44,12 +44,22 @@ function TaskModal(props) {
     }
   };
 
+  async function deleteTask() {
+    await api.task.deleteTask(props.data.taskId).then(response => {
+      if (response.ok) {
+        handleTaskCreation();
+      } else {
+        ToastService.showErrorToast();
+      }
+    })
+  }
+
   return (
     <Form initialValues={props.data.initialData} onFinish={handleSubmit}>
       <BaseModal
         id={props.data.id}
         width={50}
-        height={50}
+        height={55}
         title={"Task"}
         footer={
           <SubmitButton>{"Save"}</SubmitButton>
@@ -81,6 +91,13 @@ function TaskModal(props) {
         >
           <TextInput />
         </FormField>
+        <Button
+          variant="danger"
+          size="sm"
+          onClick={deleteTask}
+        >
+          Delete this task
+        </Button>
       </BaseModal>
     </Form>
   );
