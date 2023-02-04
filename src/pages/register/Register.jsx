@@ -52,6 +52,7 @@ function Register() {
                 <FormField
                     label="Password"
                     name="password"
+                    type="password"
                     rules={[RULES.required]}
                     required
                 >

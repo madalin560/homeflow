@@ -34,6 +34,7 @@ const COLUMNS = [
 function Dashboard(props) {
 
     const [familyId, setFamilyId] = useState('');
+    const [familyName, setFamilyName] = useState('');
     const [user, setUser] = useState({});
 
     useEffect(async () => {
@@ -42,11 +43,21 @@ function Dashboard(props) {
                 const user = await result.json();
                 setFamilyId(user.familyId);
                 setUser(user);
+                await getFamilyNameAndSetIt(user.familyId);
             }
         }).catch(err => {
             console.error(err);
         }); 
     }, []);
+
+    async function getFamilyNameAndSetIt(familyId) {
+        await api.family.getFamilyById(familyId).then(async result => {
+            const family = await result.json();
+            setFamilyName(family.name);
+        }).catch(err => {
+            console.log(err);
+        });
+    }
 
     const AddTaskButton = (
         <Button size="lg" onClick={() => {
@@ -57,7 +68,7 @@ function Dashboard(props) {
                 }
             });
         }}>
-            Add new task
+            Add task
         </Button>
     );
     
@@ -92,7 +103,7 @@ function Dashboard(props) {
                 <NoData action={CreateFamilyButton} />
             </Panel>
             :
-            <Panel title={'Tasks in my family'} actionButtons={[AddTaskButton, EditProfileButton]}>
+            <Panel title={'Tasks in ' + familyName} actionButtons={[AddTaskButton, EditProfileButton]}>
                 <Table columns={COLUMNS} familyId={familyId}/>
             </Panel>
             }

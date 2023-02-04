@@ -93,6 +93,15 @@ const api = {
                 },
                 body: JSON.stringify({name: familyName, membersList: [userName]})
             });
+        },
+        getFamilyById: (familyId) => {
+            return fetch(BASE_URL + '/' + FAMILY + '/' + familyId, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Basic ' + getCredentials()
+                }
+            });
         }
     }
 }
