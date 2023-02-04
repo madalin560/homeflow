@@ -102,6 +102,15 @@ const api = {
                     Authorization: 'Basic ' + getCredentials()
                 }
             });
+        },
+        addToFamily: (familyId, username) => {
+            return fetch(BASE_URL + '/' + FAMILY + '/add/' + familyId + '/' + username, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Basic ' + getCredentials()
+                }
+            })
         }
     }
 }

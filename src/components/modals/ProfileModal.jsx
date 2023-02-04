@@ -25,6 +25,8 @@ function ProfileModal(props) {
     await api.user.updateUser(values.name, values.firstName, values.lastName, values.email, values.phone, values.familyId).then(response => {
         if (response.ok) {
             handleProfileUpdate();
+        } else {
+          ToastService.showErrorToast();
         }
     })
   };

@@ -29,12 +29,16 @@ function TaskModal(props) {
       await api.task.updateTask(props.data.taskId, values.name, values.state, props.data.familyId, values.assigneeName).then(response => {
         if (response.ok) {
           handleTaskCreation();
+        } else {
+          ToastService.showErrorToast();
         }
       })
     } else {
       await api.task.addTask(values.name, values.state, props.data.familyId, values.assigneeName).then(response => {
         if (response.ok) {
           handleTaskCreation();
+        } else {
+          ToastService.showErrorToast();
         }
       });
     }
@@ -45,7 +49,7 @@ function TaskModal(props) {
       <BaseModal
         id={props.data.id}
         width={50}
-        height={70}
+        height={50}
         title={"Task"}
         footer={
           <SubmitButton>{"Save"}</SubmitButton>

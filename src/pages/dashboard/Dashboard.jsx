@@ -95,6 +95,19 @@ function Dashboard(props) {
         </Button>
     );
 
+    const AddUserToFamilyButton = ( 
+        <Button size='lg' onClick={() => {
+            ModalService.openModal({
+                type: MODAL_TYPES.ADD_USER_MODAL,
+                data: {
+                    familyId: familyId
+                }
+            })
+        }}>
+            Add user to family
+        </Button>
+    );
+
     return (
         <React.Fragment>
             {
@@ -103,7 +116,7 @@ function Dashboard(props) {
                 <NoData action={CreateFamilyButton} />
             </Panel>
             :
-            <Panel title={'Tasks in ' + familyName} actionButtons={[AddTaskButton, EditProfileButton]}>
+            <Panel title={'Tasks in ' + familyName} actionButtons={[AddTaskButton, AddUserToFamilyButton, EditProfileButton]}>
                 <Table columns={COLUMNS} familyId={familyId}/>
             </Panel>
             }
