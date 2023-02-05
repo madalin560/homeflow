@@ -108,6 +108,19 @@ function Dashboard(props) {
         </Button>
     );
 
+    const RemoveUserFromFamily = (
+        <Button size='lg' onClick={() => {
+            ModalService.openModal({
+                type: MODAL_TYPES.REMOVE_USER_MODAL,
+                data: {
+                    familyId: familyId
+                }
+            })
+        }}>
+            Remove user from family
+        </Button>
+    )
+
     return (
         <React.Fragment>
             {
@@ -116,7 +129,7 @@ function Dashboard(props) {
                 <NoData action={CreateFamilyButton} />
             </Panel>
             :
-            <Panel title={'Tasks in ' + familyName} actionButtons={[AddTaskButton, AddUserToFamilyButton, EditProfileButton]}>
+            <Panel title={'Tasks in ' + familyName} actionButtons={[AddTaskButton, AddUserToFamilyButton, RemoveUserFromFamily, EditProfileButton]}>
                 <Table columns={COLUMNS} familyId={familyId}/>
             </Panel>
             }

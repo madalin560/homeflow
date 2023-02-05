@@ -120,6 +120,15 @@ const api = {
                     Authorization: 'Basic ' + getCredentials()
                 }
             })
+        },
+        removeFromFamily: (familyId, username) => {
+            return fetch(BASE_URL + '/' + FAMILY + '/delete/' + familyId + '/' + username, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Basic ' + getCredentials()
+                }
+            })
         }
     }
 }
