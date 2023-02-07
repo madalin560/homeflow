@@ -10,10 +10,10 @@ import {
   SubmitButton,
   SelectInput,
 } from "common/form/field-types";
-import { ModalService } from "common/services/modal-service/ModalService";
-import { ToastService } from "common/services/toast-service/ToastService";
+import {ModalService} from "common/services/modal-service/ModalService";
+import {ToastService} from "common/services/toast-service/ToastService";
 
-import { RULES } from "common/form/validations/common-validations";
+import {RULES} from "common/form/validations/common-validations";
 import api from "services/api";
 
 function TaskModal(props) {
@@ -22,19 +22,22 @@ function TaskModal(props) {
   const handleTaskCreation = () => {
     ModalService.closeModal(props.data.id);
     ToastService.showSuccessToast();
+    props.data.saveCallback();
   };
 
   const handleSubmit = async (values) => {
+    const commonPayload = [values.name, values.state, props.data.familyId, values.assigneeName];
+
     if (isEditMode) {
-      await api.task.updateTask(props.data.taskId, values.name, values.state, props.data.familyId, values.assigneeName).then(response => {
+      await api.task.updateTask(props.data.taskId, ...commonPayload).then(response => {
         if (response.ok) {
           handleTaskCreation();
         } else {
           ToastService.showErrorToast();
         }
-      })
+      });
     } else {
-      await api.task.addTask(values.name, values.state, props.data.familyId, values.assigneeName).then(response => {
+      await api.task.addTask(...commonPayload).then(response => {
         if (response.ok) {
           handleTaskCreation();
         } else {

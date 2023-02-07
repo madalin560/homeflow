@@ -3,7 +3,6 @@ import {Login} from 'pages/login/Login';
 import {Dashboard} from 'pages/dashboard/Dashboard';
 import {ResetPassword} from 'pages/reset-password/ResetPassword';
 import {User} from 'pages/user/User';
-import {Scoreboard} from 'pages/scoreboard/Scoreboard';
 
 const PAGES = {
     landingPage: '/',
@@ -11,8 +10,7 @@ const PAGES = {
     register: '/register',
     user: '/userInfo',
     dashboard: '/dashboard',
-    resetPassword: '/resetPassword',
-    scoreboard: '/scoreboard'
+    resetPassword: '/resetPassword'
 }
 
 const ROUTES_CONFIG = [
@@ -38,11 +36,6 @@ const ROUTES_CONFIG = [
     {
         path: PAGES.user,
         component: User,
-        guarded: true
-    },
-    {
-        path: PAGES.scoreboard,
-        component: Scoreboard,
         guarded: true
     }
 ];

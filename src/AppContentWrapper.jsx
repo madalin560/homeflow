@@ -31,17 +31,6 @@ function AppContentWrapper(props) {
         [props.userData]
     );
 
-    useEffect(
-        () => {
-            if (Cookie.getCookieByName('AUTH')) {
-                /*Endpoint.api.getUserData().then(response => {
-                    dispatch({type: ACTION_TYPES.SET_USER, payload: response})
-                });*/
-            }
-        },
-        [dispatch]
-    );
-
     setInterval(function() {
         const time = Date.now();
         const expiredToasts = _.filter(props.toasts, (toast) => (
@@ -55,7 +44,7 @@ function AppContentWrapper(props) {
 
     return (
         <Router>
-            <Navigation />
+            <Navigation userData={props.userData} />
             <ModalFactory modalStack={props.modals} />
             <ToastFactory toasts={props.toasts} />
             <div className="content-wrapper">
@@ -70,7 +59,6 @@ function AppContentWrapper(props) {
 
 const mapStateToProps = (state) => ({
     userData: state.appState.userData,
-    toasts: state.appState.toasts,
     modals: state.modals.modalStack,
     toasts: state.toasts.toasts,
 });

@@ -27,9 +27,9 @@ function Register() {
                 history.push(PAGES.login);
             }
        })).catch(errResponse => {
-                setAlertPayload(_.get(errResponse, 'message', 'Unknown Error'));
-                setShowAlert(true);
-            });
+            setAlertPayload(_.get(errResponse, 'message', 'Unknown Error'));
+            setShowAlert(true);
+        });
     }
 
     return (
@@ -56,7 +56,7 @@ function Register() {
                     rules={[RULES.required]}
                     required
                 >
-                    <TextInput />
+                    <TextInput type="password" />
                 </FormField>
                 <Link onClick={() => history.push(PAGES.login)}>
                     Already have an account? Click here to login

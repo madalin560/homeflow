@@ -57,7 +57,7 @@ function Navigation(props) {
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        <div className="mr-3">Welcome, {props.userData.firstName}!</div>
+                        <div className="mr-3">Welcome, {props.userData.name}!</div>
                         <ResponsiveLayout
                             breakpoint={986}
                             renderDesktop={() => (
@@ -74,7 +74,6 @@ function Navigation(props) {
                             renderMobile={() => (
                                 <React.Fragment>
                                     <Nav.Link onClick={() => handleRedirect(PAGES.user)}>My Profile</Nav.Link>
-                                    <Nav.Link onClick={() => handleRedirect(PAGES.scoreboard)}>Scoreboard</Nav.Link>
                                     <Nav.Link onClick={signOut}>Sign out</Nav.Link>
                                 </React.Fragment>
                             )}

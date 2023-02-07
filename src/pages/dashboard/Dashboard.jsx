@@ -1,38 +1,20 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Button} from 'react-bootstrap';
-import _, { result } from 'lodash';
 
-import {Table} from 'components/table/Table';
 import {Panel} from 'components/layout/Panel';
+import {NoData} from 'components/no-data/NoData';
+import {TasksTable} from './page-components/TasksTable';
+import {FamilyTable} from './page-components/FamilyTable';
 
-import './Dashboard.scss';
-import { NoData } from 'components/no-data/NoData';
 import api from 'services/api';
 import Cookie from 'services/cookies/Cookie';
-import { ModalService } from "common/services/modal-service/ModalService";
-import { MODAL_TYPES } from "../../configs/modal-config"
+import {ModalService} from 'common/services/modal-service/ModalService';
+import {MODAL_TYPES} from 'configs/modal-config';
 
-const COLUMNS = [
-    {
-        header: 'Name',
-        accessor: 'name'
-    },
-    {
-        header: 'Status',
-        accessor: 'state'
-    },
-    {
-        header: 'Assigned To',
-        accessor: 'assigneeName'
-    },
-    {
-        header: 'Edit',
-        accessor: 'edit'
-    }
-];
+import './Dashboard.scss';
+import {ToastService} from "../../common/services/toast-service/ToastService";
 
 function Dashboard(props) {
-
     const [familyId, setFamilyId] = useState('');
     const [familyName, setFamilyName] = useState('');
     const [user, setUser] = useState({});
@@ -46,8 +28,8 @@ function Dashboard(props) {
                 await getFamilyNameAndSetIt(user.familyId);
             }
         }).catch(err => {
-            console.error(err);
-        }); 
+            ToastService.showErrorToast("Request failed");
+        });
     }, []);
 
     async function getFamilyNameAndSetIt(familyId) {
@@ -60,18 +42,22 @@ function Dashboard(props) {
     }
 
     const AddTaskButton = (
-        <Button size="lg" onClick={() => {
-            ModalService.openModal({
-                type: MODAL_TYPES.TASK_MODAL,
-                data: {
-                    familyId: familyId
-                }
-            });
-        }}>
+        <Button
+            size="lg"
+            onClick={() => {
+                ModalService.openModal({
+                    type: MODAL_TYPES.TASK_MODAL,
+                    data: {
+                        familyId: familyId
+                    }
+                });
+            }}
+            disabled={!familyId}
+        >
             Add task
         </Button>
     );
-    
+
     const CreateFamilyButton = (
         <Button size="lg" onClick={() => {
             ModalService.openModal({
@@ -82,57 +68,43 @@ function Dashboard(props) {
         </Button>
     );
 
-    const EditProfileButton = (
-        <Button size="lg" onClick={() => {
-            ModalService.openModal({
-                type: MODAL_TYPES.PROFILE_MODAL,
-                data: {
-                    initialData: user
-                }
-            });
-        }}>
-            Edit profile
-        </Button>
-    );
-
-    const AddUserToFamilyButton = ( 
-        <Button size='lg' onClick={() => {
-            ModalService.openModal({
-                type: MODAL_TYPES.ADD_USER_MODAL,
-                data: {
-                    familyId: familyId
-                }
-            })
-        }}>
-            Add user to family
-        </Button>
-    );
-
-    const RemoveUserFromFamily = (
-        <Button size='lg' onClick={() => {
-            ModalService.openModal({
-                type: MODAL_TYPES.REMOVE_USER_MODAL,
-                data: {
-                    familyId: familyId
-                }
-            })
-        }}>
-            Remove user from family
-        </Button>
+    const FamilyActions = (
+        <div style={{display: 'flex', gap: '8px'}}>
+            <Button size='lg' onClick={() => {
+                ModalService.openModal({
+                    type: MODAL_TYPES.REMOVE_USER_MODAL,
+                    data: {
+                        familyId: familyId
+                    }
+                })
+            }}>
+                Remove user from family
+            </Button>
+            <Button size='lg' onClick={() => {
+                ModalService.openModal({
+                    type: MODAL_TYPES.ADD_USER_MODAL,
+                    data: {
+                        familyId: familyId
+                    }
+                })
+            }}>
+                Add user to family
+            </Button>
+        </div>
     )
 
     return (
         <React.Fragment>
-            {
-            !familyId?
-            <Panel title={'My family'}>
-                <NoData action={CreateFamilyButton} />
+            <Panel title={'My family'} actionButtons={FamilyActions}>
+                {!familyId
+                    ? <NoData action={CreateFamilyButton} />
+                    : <FamilyTable familyId={familyId}/>}
             </Panel>
-            :
-            <Panel title={'Tasks in ' + familyName} actionButtons={[AddTaskButton, AddUserToFamilyButton, RemoveUserFromFamily, EditProfileButton]}>
-                <Table columns={COLUMNS} familyId={familyId}/>
+            <Panel title={'Tasks in ' + familyName} actionButtons={AddTaskButton}>
+                {!familyId
+                    ? <NoData action={CreateFamilyButton} />
+                    : <TasksTable familyId={familyId}/>}
             </Panel>
-            }
         </React.Fragment>
     );
 }

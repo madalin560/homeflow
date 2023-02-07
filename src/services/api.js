@@ -1,6 +1,6 @@
 import Cookie from 'services/cookies/Cookie';
 
-const BASE_URL = 'http://localhost:8080/api';
+const BASE_URL = '/api';
 const USER = 'users';
 const FAMILY = 'families';
 const TASK = 'tasks';
@@ -10,8 +10,6 @@ const getCredentials = () => {
 }
 
 const api = {
-
-    
     user: {
         login: async (username, password) => {
             return fetch(BASE_URL + '/' + USER + '/' + username, {

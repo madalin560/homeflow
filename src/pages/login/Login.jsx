@@ -3,13 +3,13 @@ import {Formik, Form, Field, ErrorMessage} from 'formik';
 import {Alert, Button} from 'react-bootstrap';
 import {useHistory} from 'react-router-dom';
 import {useDispatch} from 'react-redux'
-import _ from 'lodash';
 
 import {Link} from 'components/link/Link';
 import {Panel} from 'components/layout/Panel';
 import Cookie from 'services/cookies/Cookie';
 import api from '../../services/api';
 
+import {ACTION_TYPES} from 'state/actions';
 import {PAGES} from 'configs/routes';
 
 import 'FormFields.scss';
@@ -21,15 +21,16 @@ function Login(props) {
     const history = useHistory();
 
     const handleFormSubmit = async (values, {setSubmitting}) => {
-        //const user = await api.user.getUser('gigel').then((response) => response.json()).then((json) => {return json;})
-        await api.user.login(values.name, values.password).then((response) => {
+        await api.user.login(values.name, values.password).then(async (response) => {
             setSubmitting(false);
-            console.log(response)
+
             if (response.ok) {
                 localStorage.setItem('creds', Buffer.from(values.name + ":" + values.password).toString('base64'));
                 Cookie.setCookie('AUTH', Buffer.from(values.name + ":" + values.password).toString('base64'));
                 Cookie.setCookie('NAME', values.name)
-                //dispatch({type: ACTION_TYPES_SET_USER, payload: response})
+
+                const parsedUserData = await response.json();
+                dispatch({type: ACTION_TYPES.SET_USER, payload: parsedUserData})
                 history.push(PAGES.dashboard);
             } else {
                 setErrorMessage('Wrong credentials')

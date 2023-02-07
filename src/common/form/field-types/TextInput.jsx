@@ -9,6 +9,7 @@ function TextInput(props) {
 
   return (
     <input
+      type={props.type}
       className={inputClasses.join(" ")}
       disabled={props.disabled}
       onChange={props.onChange}
