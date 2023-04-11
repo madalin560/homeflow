@@ -1,29 +1,11 @@
 import React, {useEffect, useState} from 'react';
 
-import {Table} from 'components/table/Table';
-
+import { Task } from 'components/task/Task';
+import {ToastService} from "common/services/toast-service/ToastService";
 import api from 'services/api';
 import {ModalService} from 'common/services/modal-service/ModalService';
 import {MODAL_TYPES} from 'configs/modal-config';
 
-const TASK_COLUMNS = [
-    {
-        header: 'Name',
-        accessor: 'name'
-    },
-    {
-        header: 'Status',
-        accessor: 'state'
-    },
-    {
-        header: 'Assigned To',
-        accessor: 'assigneeName'
-    },
-    {
-        header: 'Edit',
-        accessor: 'edit'
-    }
-];
 
 function TasksTable({familyId}) {
     const [tasks, setTasks] = useState([]);
@@ -53,12 +35,35 @@ function TasksTable({familyId}) {
         fetchData();
     }, []);
 
+
+    async function deleteTask(id) {
+        await api.task.deleteTask(id).then(response => {
+          if (response.ok) {
+            setTasks(tasks.filter(t => t.id !== id))
+          } else {
+            ToastService.showErrorToast();
+          }
+        })
+    }
+
+    function filterTasks(state) {
+        return tasks.filter(t => t.state === state).map(task => (
+            <Task name={task.name} assigneeName={task.assigneeName} editAction={() => {editTask(task)}} deleteAction={() => deleteTask(task.id)}/>
+        ))
+    }
+
     return (
-        <Table
-            data={tasks}
-            columns={TASK_COLUMNS}
-            editAction={editTask}
-        />
+        <div className="taskCols">
+            <div className="column">
+                {filterTasks("PENDING")}
+            </div>
+            <div className="column">
+                {filterTasks("IN_PROGRESS")}
+            </div>
+            <div className="column">
+                {filterTasks("DONE")}
+            </div>
+        </div>
     );
 }
 

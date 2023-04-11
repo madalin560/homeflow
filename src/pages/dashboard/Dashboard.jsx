@@ -94,18 +94,18 @@ function Dashboard(props) {
     )
 
     return (
-        <React.Fragment>
-            <Panel title={'My family'} actionButtons={FamilyActions}>
-                {!familyId
-                    ? <NoData action={CreateFamilyButton} />
-                    : <FamilyTable familyId={familyId}/>}
-            </Panel>
+        <div>
             <Panel title={'Tasks in ' + familyName} actionButtons={AddTaskButton}>
                 {!familyId
                     ? <NoData action={CreateFamilyButton} />
                     : <TasksTable familyId={familyId}/>}
             </Panel>
-        </React.Fragment>
+            <Panel title={'My family'} actionButtons={FamilyActions}>
+                {!familyId
+                    ? <NoData action={CreateFamilyButton} />
+                    : <FamilyTable familyId={familyId}/>}
+            </Panel>
+        </div>
     );
 }
 

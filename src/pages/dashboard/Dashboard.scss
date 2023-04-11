@@ -3,3 +3,17 @@
     bottom: 30px;
     left:30px;
 }
+
+.taskCols {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.column {
+    width: 30%;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+}

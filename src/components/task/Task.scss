@@ -1,0 +1,21 @@
+@import "src/scss/variables";
+
+.card {
+    padding: $medium-padding;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    margin-bottom: $medium-margin;
+    background: $white;
+    min-height: 110px;
+}
+
+.faded {
+    color: grey;
+}
+
+.floatRight {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 10px;
+}
