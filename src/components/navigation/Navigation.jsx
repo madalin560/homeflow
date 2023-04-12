@@ -40,6 +40,8 @@ function Navigation(props) {
     const signOut = useCallback(
         () => {
             Cookie.deleteCookie('AUTH');
+            Cookie.deleteCookie('NAME');
+            Cookie.deleteCookie('ROLE');
             dispatch({type: ACTION_TYPES.SET_USER, payload: ''})
 
             handleRedirect(PAGES.landingPage);
@@ -49,7 +51,7 @@ function Navigation(props) {
 
     const navigationContent = useMemo(
         () => {
-            return _.isEmpty(props.userData)
+            return _.isEmpty(Cookie.getCookieByName('AUTH'))
                 ? (
                     <React.Fragment>
                         <div onClick={() => handleRedirect(PAGES.register)} className="menu-item">Register</div>
@@ -57,7 +59,7 @@ function Navigation(props) {
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        <div className="mr-3">Welcome, {props.userData.name}!</div>
+                        <div className="mr-3">Welcome, {Cookie.getCookieByName('NAME')}!</div>
                         <ResponsiveLayout
                             breakpoint={986}
                             renderDesktop={() => (
@@ -86,7 +88,7 @@ function Navigation(props) {
 
     return (
         <Navbar variant="dark" expand="lg">
-            <div onClick={() => handleRedirect(PAGES.landingPage)} className="brand-name">Family<span>Management</span></div>
+            <div onClick={() => handleRedirect(PAGES.landingPage)} className="brand-name">HomeFlow</div>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">

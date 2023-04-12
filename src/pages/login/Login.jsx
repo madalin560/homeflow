@@ -25,11 +25,11 @@ function Login(props) {
             setSubmitting(false);
 
             if (response.ok) {
-                localStorage.setItem('creds', Buffer.from(values.name + ":" + values.password).toString('base64'));
+                const parsedUserData = await response.json();
                 Cookie.setCookie('AUTH', Buffer.from(values.name + ":" + values.password).toString('base64'));
                 Cookie.setCookie('NAME', values.name)
+                Cookie.setCookie('ROLE', parsedUserData.role);
 
-                const parsedUserData = await response.json();
                 dispatch({type: ACTION_TYPES.SET_USER, payload: parsedUserData})
                 history.push(PAGES.dashboard);
             } else {
