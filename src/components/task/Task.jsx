@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { PencilSquare, Trash} from 'react-bootstrap-icons';
 
 import "./Task.scss";

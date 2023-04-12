@@ -27,6 +27,10 @@ function TaskModal(props) {
   const handleSubmit = async (values) => {
     const commonPayload = [values.name, values.state, props.data.familyId, values.assigneeName];
 
+    if (commonPayload[3] == "") {
+      commonPayload[3] = undefined;
+    }
+
     if (isEditMode) {
       await api.task.updateTask(props.data.taskId, ...commonPayload).then(response => {
         if (response.ok) {

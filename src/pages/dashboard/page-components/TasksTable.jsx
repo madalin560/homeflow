@@ -5,6 +5,7 @@ import {ToastService} from "common/services/toast-service/ToastService";
 import api from 'services/api';
 import {ModalService} from 'common/services/modal-service/ModalService';
 import {MODAL_TYPES} from 'configs/modal-config';
+import { Button } from "react-bootstrap";
 
 
 function TasksTable({familyId}) {
@@ -48,22 +49,48 @@ function TasksTable({familyId}) {
 
     function filterTasks(state) {
         return tasks.filter(t => t.state === state).map(task => (
-            <Task name={task.name} assigneeName={task.assigneeName} editAction={() => {editTask(task)}} deleteAction={() => deleteTask(task.id)}/>
+            <Task name={task.name} assigneeName={task.assigneeName} editAction={() => {editTask(task)}} deleteAction={() => deleteTask(task.id)} key={task.id}/>
         ))
     }
 
     return (
+        <>
+        <Button
+            size="lg"
+            onClick={() => {
+                ModalService.openModal({
+                    type: MODAL_TYPES.TASK_MODAL,
+                    data: {
+                        familyId: familyId,
+                        saveCallback: fetchData
+                    }
+                });
+            }}
+            disabled={!familyId}
+        >
+            Add new task
+        </Button>
         <div className="taskCols">
-            <div className="column">
-                {filterTasks("PENDING")}
+            <div className='columnContainer'>
+                <p className="columnTitle">Pending</p>
+                <div className="column">
+                    {filterTasks("PENDING")}
+                </div>
             </div>
-            <div className="column">
-                {filterTasks("IN_PROGRESS")}
+            <div className='columnContainer'>
+                <p className="columnTitle">In Progress</p>
+                <div className="column">
+                    {filterTasks("IN_PROGRESS")}
+                </div>
             </div>
-            <div className="column">
-                {filterTasks("DONE")}
+            <div className='columnContainer'>
+                <p className="columnTitle">Completed</p>
+                <div className="column">
+                    {filterTasks("DONE")}
+                </div>
             </div>
         </div>
+        </>
     );
 }
 

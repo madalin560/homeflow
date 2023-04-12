@@ -41,22 +41,6 @@ function Dashboard(props) {
         });
     }
 
-    const AddTaskButton = (
-        <Button
-            size="lg"
-            onClick={() => {
-                ModalService.openModal({
-                    type: MODAL_TYPES.TASK_MODAL,
-                    data: {
-                        familyId: familyId
-                    }
-                });
-            }}
-            disabled={!familyId}
-        >
-            Add task
-        </Button>
-    );
 
     const CreateFamilyButton = (
         <Button size="lg" onClick={() => {
@@ -95,7 +79,7 @@ function Dashboard(props) {
 
     return (
         <div>
-            <Panel title={'Tasks in ' + familyName} actionButtons={AddTaskButton}>
+            <Panel title={'Tasks in ' + familyName}>
                 {!familyId
                     ? <NoData action={CreateFamilyButton} />
                     : <TasksTable familyId={familyId}/>}
